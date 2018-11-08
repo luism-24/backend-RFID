@@ -6,6 +6,7 @@ router.get('/', (req, res) => {
     res.redirect('/api/users');
 });
 router.get('/api/users', userController.getUsers);
+router.get('/api/usersByCode/:id', userController.getUserByCode)
 router.post('/api/user', userController.createUser);
 router.get('/api/user/:id', userController.getUser); 
 router.put('/api/user/:id', userController.editUser); 

@@ -1,9 +1,15 @@
 const User = require('../models/user');
-const userController = {}; 
+const userController = {};
 
 userController.getUsers = async (req, res) => {
     const users = await User.find();
-    res.json(users); 
+    res.json(users);
+}
+
+userController.getUserByCode = async (req, res) => {
+    const { id } = req.params
+    const user = await User.find({ codigo: id })
+    res.json(user);
 }
 
 userController.createUser = async (req, res) => {
@@ -14,29 +20,29 @@ userController.createUser = async (req, res) => {
     });
 }
 
-userController.getUser = async(req, res) => {
-    const employee = await User.findById(req.params.id); 
+userController.getUser = async (req, res) => {
+    const employee = await User.findById(req.params.id);
     res.json(employee);
 }
 
-userController.editUser = async(req, res) => {
-    const { id } = req.params; 
+userController.editUser = async (req, res) => {
+    const { id } = req.params;
     const user = {
 
-        codigo:req.body.codigo,
-        name: req.body.name, 
+        codigo: req.body.codigo,
+        name: req.body.name,
         position: req.body.position,
     }
 
-    await User.findByIdAndUpdate(id, {$set: user}, {new: true}); 
+    await User.findByIdAndUpdate(id, { $set: user }, { new: true });
 
-    res.json({status: 'User Updated'}); 
+    res.json({ status: 'User Updated' });
 }
 
 userController.deleteUser = async (req, res) => {
-   await User.findByIdAndRemove(req.params.id);
+    await User.findByIdAndRemove(req.params.id);
 
-   res.json({status: 'User Deleted'});      
+    res.json({ status: 'User Deleted' });
 }
 
 module.exports = userController;
